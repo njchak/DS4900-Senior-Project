@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="canonical" href="https://html5-templates.com/" />
-    <title>Bootstrap Template With Sticky Menu</title>
+    <title>DS4900 Senior Project</title>
     <meta name="description" content="Simplified Bootstrap template with sticky menu">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sticky-menu.css" rel="stylesheet">
@@ -55,7 +55,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Introduction</h1>
-                    <p>Intro here</p>
+                    <p>For our project, we wanted to compare sentiment over the past year with overall covid cases, to see if there is any correlation between the two variables. To go about doing this, we are handling the data at a city level. We are tracking for the following cities:
+                        <ul style="list-style-type:none;"><li><i>Boston</i></li><li><i>New York City</i></li><li><i>Chicago</i></li><li><i>Miami</i></li></ul>
+                    </p>
+                    <p>By taking from various cities, we are sampling from multiple parts of the country. 
+                        Covid was handled differently in parts of the country, and this may translate to a 
+                        difference in overall sentiment that we can trace and measure over time. In addition, 
+                        New York City was the epicenter of the virus during the beginning of the pandemic, so this could have a tangible impact on the sentiment of 
+                        Reddit posts during that time frame of the initial months of the outbreak in the US.
+                        
+            
+                    </p>
+                    <p>Comparing sentiment trends to covid case numbers 
+                        could result in a correlation that can be tracked in the future and result in a way
+                        to determine how covid numbers will change with a changing sentiment.</p>
                 </div>
             </div>
         </div>
@@ -67,7 +80,18 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Data Collection</h1>
-                    <p>Methods here</p>
+                    <p dir="ltr"><span><i>Initial method:</i>&nbsp;</span></p>
+<p dir="ltr"><span>Data was collected from a third party Reddit API, pushshift.io (</span><a href="https://pushshift.io/"><span>https://pushshift.io/</span></a><span>)</span></p>
+<p dir="ltr"><span>We collected for each city&rsquo;s respective subreddit for the date range of 3/1/2020 - 3/1/2021 to get an entire year&rsquo;s worth of data. 
+    Using pushshift&rsquo;s API calls directly is what we&rsquo;ve done up to this point. We use the </span><span>requests </span><span>package to get the json from the endpoint, 
+        and return the data field within that json to get the relevant data. Since each query to the API can only return 100 rows, we built a workaround that advances the timestamp 
+        ranges of the query and iterates over calls to the API until the entire year is covered. However, we are perfecting data collection and recently found that psaw (Pushshift API Wrapper for Python) will get us every post for the given time range; currently, the direct API calls only collect a few posts per day, totalling in about 1300 rows per subreddit. 
+    This data was then converted to a dataframe and stored as a CSV.</span></p>
+<p dir="ltr"><span><i>Updated Method:</i></span></p>
+<p dir="ltr"><span>To get all rows of data, we transitioned from using direct calls using requests to using psaw (https://pypi.org/project/psaw/), a Python wrapper for the pushshift API. The data we received using this method was significantly more substantial than our previous one, with each dataset going from containing about 1300 rows to over 20,000 in most cases.&nbsp;</span></p>
+<p dir="ltr"><span>For covid data for each city, we will be using data provided by the New York Times on Github: </span><a href="https://github.com/nytimes/covid-19-data"><span>https://github.com/nytimes/covid-19-data</span></a><span>. </span><span>This data has granularity at the national, state, and county levels. We will be using the county levels to emulate the city level. In addition, we will be calculating the daily total number of cases based off of the cumulative number of cases, which is what is provided in the dataset.</span></p>
+<p dir="ltr"><span>There were a few odd findings in the covid 19 data from NYT. There were a few days where there were no cases reported in some datasets (such as 12/25 or 1/1) or in some cases, days where the total number of cumulative cases went down (resulting in a negative number for daily cases). Since there were only a few rows with this issue, these days were discarded from the dataset since they are clearly incorrect. Finally, to smooth out the outliers in the data, we opted to compute the daily average on a week-by-week basis, starting on every Sunday for that week.</span></p>
+<p><span>&nbsp;</span></p>
                 </div>
             </div>
         </div>
@@ -79,6 +103,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Sentiment Analysis</h1>
+                    <p>To make our own model, we first started with finding data that is pre-labelled with sentiment so that we could use that for training, 
+                        as opposed to manually labelling data ourselves. Initially, we wanted to have our model track sentiments in three categories: positive, negative and neutral. To achieve this goal, we were working with an Amazon reviews dataset with each review labelled 1 through 5 stars; intuitively, we chose any review less than 3 stars as negative, more than 3 stars as positive, and 3 stars exactly as neutral. However, this model performed poorly on our test set in the neutral category, even after experimenting with the sentiment thresholds. Most neutral sentiments were getting labelled as positive or negative, 
+                        when it is expected that most sentiments are neutral and less are explicitly positive or negative.
+                    </p>
+                    <p>To solve this issue, we utilized the IMDB movie dataset (<a href-"https://www.kaggle.com/lakshmi25npathi/sentiment-analysis-of-imdb-movie-reviews"><span>https://www.kaggle.com/lakshmi25npathi/sentiment-analysis-of-imdb-movie-reviews</span></a>) with sentiments labelled positive or negative only, and used the probability of a positive sentiment to determine whether a post was positive, negative or neutral. 
+                        By using the probability instead of a discrete binary label, this allowed us to set the range for what a neutral post should be.</p>
+                    <p>To actually train our model, we first had to vectorize our text into a matrix of features so our model could interpret the text data. 
+                        Once we vectorized our text, we used Logistic Regression as our model of choice due to our data technically having a binary output, 
+                        even though we will be utilizing the probabilities instead of the actual output values themselves. Our model had over 80% accuracy, and results
+                        more along the lines that we were expecting. See down below for some interactive visualizations to explore the data yourself!
+                    </p>
                 </div>
             </div>
         </div>
