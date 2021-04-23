@@ -43,49 +43,13 @@ html {
     color: #FFF;
 }
 .section1 {
-    height: 100%;
+    height: auto;
     padding-top: 150px;
     text-align: center;
     background: #fff;
 }
 .section2 {
-    height: 100%;
-    padding-top: 50px;
-    text-align: center;
-    background: #EFDECD;
-}
-.section3 {
-    height: 100%;
-    padding-top: 50px;
-    text-align: center;
-    background: #fff;
-}
-.section4 {
-    height: 100%;
-    padding-top: 50px;
-    text-align: center;
-    background: #EFDECD;
-}
-.section5 {
-    height: 100%;
-    padding-top: 50px;
-    text-align: center;
-    background: #fff;
-}
-.section6 {
-    height: 100%;
-    padding-top: 50px;
-    text-align: center;
-    background: #EFDECD;
-}
-.section7 {
-    height: 100%;
-    padding-top: 50px;
-    text-align: center;
-    background: #fff;
-}
-.section8 {
-    height: 100%;
+    height: auto;
     padding-top: 50px;
     text-align: center;
     background: #EFDECD;
