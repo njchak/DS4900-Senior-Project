@@ -42,27 +42,51 @@ html {
     background-color: #337AB7;
     color: #FFF;
 }
-.welcome-section {
+.section1 {
     height: 100%;
     padding-top: 150px;
     text-align: center;
     background: #fff;
 }
-.about-section {
+.section2 {
     height: 100%;
-    padding-top: 150px;
+    padding-top: 50px;
     text-align: center;
     background: #EFDECD;
 }
-.whatwedo-section {
+.section3 {
     height: 100%;
-    padding-top: 150px;
+    padding-top: 50px;
     text-align: center;
     background: #fff;
 }
-.contact-section {
+.section4 {
     height: 100%;
-    padding-top: 150px;
+    padding-top: 50px;
+    text-align: center;
+    background: #EFDECD;
+}
+.section5 {
+    height: 100%;
+    padding-top: 50px;
+    text-align: center;
+    background: #fff;
+}
+.section6 {
+    height: 100%;
+    padding-top: 50px;
+    text-align: center;
+    background: #EFDECD;
+}
+.section7 {
+    height: 100%;
+    padding-top: 50px;
+    text-align: center;
+    background: #fff;
+}
+.section8 {
+    height: 100%;
+    padding-top: 50px;
     text-align: center;
     background: #EFDECD;
 }
