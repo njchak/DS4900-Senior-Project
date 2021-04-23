@@ -1,0 +1,4 @@
+Sentiment,Boston,Chicago,New York City,Miami
+neutral,11383,13148,18207,4224
+positive,7968,8477,16606,3178
+negative,1708,1605,2830,761
