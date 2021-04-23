@@ -1,6 +1,6 @@
 //From: https://www.d3-graph-gallery.com/graph/line_select.html
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 100, bottom: 30, left: 60},
+var margin = {top: 70, right: 100, bottom: 30, left: 60},
     width = 500 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -51,6 +51,24 @@ d3.csv("data/bar_graph_data/sentiment_title_counts.csv", function(data) {
     var yAxis = svg.append("g")
       .call(d3.axisLeft(y));
 
+    //Credit: https://stackoverflow.com/a/16780756
+    var tooltip = d3.select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "visible")
+
+      // Label for Title
+    svg.append("text")
+      .attr("x", (width / 2))             
+      .attr("y", 0 - (margin.top / 2))
+      .attr("text-anchor", "middle")  
+      .style("font-size", "30px") 
+      .style("text-decoration", "underline") 
+      .style("font-style", "italic") 
+      .text("Reddit Post Sentiment Counts");
+    
+
 
     var bars = svg.selectAll(".bar")
       .data(data)
@@ -60,13 +78,20 @@ d3.csv("data/bar_graph_data/sentiment_title_counts.csv", function(data) {
       .attr("x", function(d) {  return x(d.Sentiment)})
       .attr("y", function(d) { return y(d.value); })
       .attr("width", function(d) { return x.bandwidth(); })
-      .attr("height", function(d) { return height - y(d.value); });
+      .attr("height", function(d) { return height - y(d.value); })
+      .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+      .on("mousemove", function(){return tooltip.style("top",
+  (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+  .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
       
-    bars.on("mouseover", function() {
+    bars.on("mouseover", function(d) {
+        tooltip.style("visibility", "visible");
+        tooltip.text('Count: ' + d.value)
         d3.select(this).style("fill", "red");
     });
 
     bars.on("mouseout", function() {
+        tooltip.style("visibility", "hidden");
         d3.select(this).style("fill", "steelblue");
     });
 
