@@ -52,7 +52,7 @@ d3.csv("data/bar_graph_data/sentiment_title_counts.csv", function(data) {
       .call(d3.axisLeft(y));
 
 
-    svg.selectAll(".bar")
+    var bars = svg.selectAll(".bar")
       .data(data)
     .enter().append("rect")
       .style("fill", "steelblue")
@@ -61,6 +61,14 @@ d3.csv("data/bar_graph_data/sentiment_title_counts.csv", function(data) {
       .attr("y", function(d) { return y(d.value); })
       .attr("width", function(d) { return x.bandwidth(); })
       .attr("height", function(d) { return height - y(d.value); });
+      
+    bars.on("mouseover", function() {
+        d3.select(this).style("fill", "red");
+    });
+
+    bars.on("mouseout", function() {
+        d3.select(this).style("fill", "steelblue");
+    });
 
     // A function that update the chart
     function update(selectedGroup) {
