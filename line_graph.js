@@ -43,7 +43,7 @@ function createLineGraph(csv, csv2, div_id, selection) {
             .call(d3.axisLeft(y1));
         
         var y2 = d3.scaleLinear()
-            .domain([0, d3.max(data2, function(d) { return +d.value; })])
+            .domain([.5, .65])
             .range([ height, height / 2 + 40]);
 
         var yAxis2 = svg.append("g")
